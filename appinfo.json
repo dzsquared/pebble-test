@@ -7,7 +7,18 @@
     "longName": "test",
     "projectType": "native",
     "resources": {
-        "media": []
+        "media": [
+            {
+                "file": "images/background.png",
+                "name": "IMAGE_BACKGROUND",
+                "type": "png"
+            },
+            {
+                "file": "fonts/Quadranta-Bold.otf",
+                "name": "QUAD_42",
+                "type": "font"
+            }
+        ]
     },
     "sdkVersion": "2",
     "shortName": "test",
