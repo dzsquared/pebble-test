@@ -4,6 +4,7 @@ static Window *s_main_window;
 
 static TextLayer *s_time_layer;
 static TextLayer *s_ampm_layer;
+static TextLayer *s_date_layer;
 
 static GFont s_time_font;
 static GFont s_ampm_font;
@@ -18,22 +19,27 @@ static void update_time() {
 
   // Create a long-lived buffer
   static char buffer[] = "00:00";
-  //static char buffer_ampm[] = "AM";
+  static char buffer_ampm[] = "AM";
+  static char buffer_date[] = "Thu Aug 11";
+  
 
   // Write the current hours and minutes into the buffer
   if(clock_is_24h_style() == true) {
     // Use 24 hour format
     strftime(buffer, sizeof("00:00"), "%I:%M", tick_time);
-    //strftime(buffer_ampm, sizeof("AM"), "%p", tick_time);
+    strftime(buffer_ampm, sizeof("AM"), "%p", tick_time);
+    strftime(buffer_date, sizeof("Thu Aug 11"), "%a %b %d", tick_time);
   } else {
     // Use 12 hour format
     strftime(buffer, sizeof("00:00"), "%I:%M", tick_time);
-    //strftime(buffer_ampm, sizeof("AM"), "%p", tick_time);
+    strftime(buffer_ampm, sizeof("AM"), "%p", tick_time);
+    strftime(buffer_date, sizeof("Thu Aug 11"), "%a %b %d", tick_time);
   }
 
   // Display this time on the TextLayer
   text_layer_set_text(s_time_layer, buffer);
-  //text_layer_set_text(s_ampm_layer, buffer_ampm);
+  text_layer_set_text(s_ampm_layer, buffer_ampm);
+  text_layer_set_text(s_date_layer, buffer_date);
 }
 
 static void main_window_load(Window *window) {
@@ -48,24 +54,31 @@ static void main_window_load(Window *window) {
   s_ampm_font = fonts_load_custom_font(resource_get_handle(RESOURCE_ID_NINE_14));
 
   // Create time TextLayer
-  s_time_layer = text_layer_create(GRect(0, 55, 144, 50));
+  s_time_layer = text_layer_create(GRect(0, 58, 144, 50));
   text_layer_set_background_color(s_time_layer, GColorClear);
   text_layer_set_text_color(s_time_layer, GColorWhite);
   text_layer_set_text_alignment(s_time_layer, GTextAlignmentLeft);
   text_layer_set_font(s_time_layer, s_time_font);
   
     // Create ampm TextLayer
-  s_ampm_layer = text_layer_create(GRect(0,74,144,50));
+  s_ampm_layer = text_layer_create(GRect(0,77,144,50));
   text_layer_set_background_color(s_ampm_layer, GColorClear);
   text_layer_set_text_color(s_ampm_layer, GColorWhite);
   text_layer_set_text_alignment(s_ampm_layer, GTextAlignmentRight);
   text_layer_set_font(s_ampm_layer, s_ampm_font);
   
-  text_layer_set_text(s_ampm_layer, "AM");
+  
+  // create date textlayer
+  s_date_layer = text_layer_create(GRect(0,115,144,50));
+  text_layer_set_background_color(s_date_layer, GColorClear);
+  text_layer_set_text_color(s_date_layer, GColorBlack);
+  text_layer_set_text_alignment(s_date_layer, GTextAlignmentCenter);
+  text_layer_set_font(s_date_layer, s_ampm_font);
 
   // Add layers to the window
   layer_add_child(window_get_root_layer(window), text_layer_get_layer(s_time_layer));
   layer_add_child(window_get_root_layer(window), text_layer_get_layer(s_ampm_layer));
+  layer_add_child(window_get_root_layer(window), text_layer_get_layer(s_date_layer));
   
   update_time();
 }
@@ -84,6 +97,7 @@ static void main_window_unload(Window *window) {
     fonts_unload_custom_font(s_ampm_font);
     // Destroy TextLayer
     text_layer_destroy(s_ampm_layer);
+    text_layer_destroy(s_date_layer);
   
 }
 

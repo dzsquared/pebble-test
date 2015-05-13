@@ -4,12 +4,11 @@
         ""
     ],
     "companyName": "drew.koballa@gmail.com",
-    "longName": "test",
+    "longName": "FocusFace",
     "projectType": "native",
     "resources": {
         "media": [
             {
-                "characterRegex": "[AM|PM]",
                 "file": "fonts/MODENINE_12.TTF",
                 "name": "NINE_14",
                 "type": "font"
@@ -22,13 +21,14 @@
             },
             {
                 "file": "images/background.png",
+                "menuIcon": true,
                 "name": "IMAGE_BACKGROUND",
                 "type": "png"
             }
         ]
     },
     "sdkVersion": "2",
-    "shortName": "test",
+    "shortName": "FocusFace",
     "uuid": "3ecb02c5-270e-4b83-a73c-382eece0459f",
     "versionCode": 1,
     "versionLabel": "1.0",
