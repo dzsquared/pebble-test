@@ -9,13 +9,20 @@
     "resources": {
         "media": [
             {
+                "characterRegex": "[AM|PM]",
+                "file": "fonts/Quadranta-Regular.otf",
+                "name": "QUAD_12",
+                "type": "font"
+            },
+            {
                 "file": "images/background.png",
                 "name": "IMAGE_BACKGROUND",
                 "type": "png"
             },
             {
+                "characterRegex": "[0-9:. ]",
                 "file": "fonts/Quadranta-Bold.otf",
-                "name": "QUAD_42",
+                "name": "QUAD_40",
                 "type": "font"
             }
         ]
