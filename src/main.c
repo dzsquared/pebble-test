@@ -44,18 +44,18 @@ static void main_window_load(Window *window) {
   layer_add_child(window_get_root_layer(window), bitmap_layer_get_layer(s_background_layer));
 
   // Create GFont
-  s_time_font = fonts_load_custom_font(resource_get_handle(RESOURCE_ID_QUAD_40));
-  s_ampm_font = fonts_load_custom_font(resource_get_handle(RESOURCE_ID_QUAD_12));
+  s_time_font = fonts_load_custom_font(resource_get_handle(RESOURCE_ID_NINE_42));
+  s_ampm_font = fonts_load_custom_font(resource_get_handle(RESOURCE_ID_NINE_14));
 
   // Create time TextLayer
   s_time_layer = text_layer_create(GRect(0, 55, 144, 50));
   text_layer_set_background_color(s_time_layer, GColorClear);
   text_layer_set_text_color(s_time_layer, GColorWhite);
-  text_layer_set_text_alignment(s_time_layer, GTextAlignmentCenter);
+  text_layer_set_text_alignment(s_time_layer, GTextAlignmentLeft);
   text_layer_set_font(s_time_layer, s_time_font);
   
     // Create ampm TextLayer
-  s_ampm_layer = text_layer_create(GRect(0,100,144,50));
+  s_ampm_layer = text_layer_create(GRect(0,74,144,50));
   text_layer_set_background_color(s_ampm_layer, GColorClear);
   text_layer_set_text_color(s_ampm_layer, GColorWhite);
   text_layer_set_text_alignment(s_ampm_layer, GTextAlignmentRight);
