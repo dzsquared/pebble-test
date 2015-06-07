@@ -1,16 +1,31 @@
 #include <pebble.h>
+#include <ctype.h>  
   
 static Window *s_main_window;
 
 static TextLayer *s_time_layer;
 static TextLayer *s_ampm_layer;
 static TextLayer *s_date_layer;
+static TextLayer *s_dow_layer;
 
 static GFont s_time_font;
 static GFont s_ampm_font;
 
 static BitmapLayer *s_background_layer;
 static GBitmap *s_background_bitmap;
+
+
+char *upcase(char *str)
+{
+    char *s = str;
+
+    while (*s)
+    {
+        *s++ = toupper((int)*s);
+    }
+
+    return str;
+}
 
 static void update_time() {
   // Get a tm structure
@@ -20,7 +35,8 @@ static void update_time() {
   // Create a long-lived buffer
   static char buffer[] = "00:00";
   static char buffer_ampm[] = "AM";
-  static char buffer_date[] = "Thu Aug 11";
+  static char buffer_date[] = "Aug 11";
+  static char buffer_dow[] = "Thu";
   
 
   // Write the current hours and minutes into the buffer
@@ -28,18 +44,22 @@ static void update_time() {
     // Use 24 hour format
     strftime(buffer, sizeof("00:00"), "%I:%M", tick_time);
     strftime(buffer_ampm, sizeof("AM"), "%p", tick_time);
-    strftime(buffer_date, sizeof("Thu Aug 11"), "%a %b %d", tick_time);
+    strftime(buffer_date, sizeof("Aug 11"), "%b %d", tick_time);
+    strftime(buffer_dow, sizeof("Thu"), "%a", tick_time);
   } else {
     // Use 12 hour format
     strftime(buffer, sizeof("00:00"), "%I:%M", tick_time);
     strftime(buffer_ampm, sizeof("AM"), "%p", tick_time);
-    strftime(buffer_date, sizeof("Thu Aug 11"), "%a %b %d", tick_time);
+    strftime(buffer_date, sizeof("Aug 11"), "%b %d", tick_time);
+    strftime(buffer_dow, sizeof("Thu"), "%a", tick_time);
   }
 
   // Display this time on the TextLayer
   text_layer_set_text(s_time_layer, buffer);
   text_layer_set_text(s_ampm_layer, buffer_ampm);
   text_layer_set_text(s_date_layer, buffer_date);
+  upcase(buffer_dow);
+  text_layer_set_text(s_dow_layer, buffer_dow);
 }
 
 static void main_window_load(Window *window) {
@@ -74,11 +94,19 @@ static void main_window_load(Window *window) {
   text_layer_set_text_color(s_date_layer, GColorBlack);
   text_layer_set_text_alignment(s_date_layer, GTextAlignmentCenter);
   text_layer_set_font(s_date_layer, s_ampm_font);
+  
+   // Create DOW TextLayer
+  s_dow_layer = text_layer_create(GRect(0, 0, 144, 50));
+  text_layer_set_background_color(s_dow_layer, GColorClear);
+  text_layer_set_text_color(s_dow_layer, GColorBlack);
+  text_layer_set_text_alignment(s_dow_layer, GTextAlignmentCenter);
+  text_layer_set_font(s_dow_layer, s_time_font);
 
   // Add layers to the window
   layer_add_child(window_get_root_layer(window), text_layer_get_layer(s_time_layer));
   layer_add_child(window_get_root_layer(window), text_layer_get_layer(s_ampm_layer));
   layer_add_child(window_get_root_layer(window), text_layer_get_layer(s_date_layer));
+  layer_add_child(window_get_root_layer(window), text_layer_get_layer(s_dow_layer));
   
   update_time();
 }
@@ -98,6 +126,7 @@ static void main_window_unload(Window *window) {
     // Destroy TextLayer
     text_layer_destroy(s_ampm_layer);
     text_layer_destroy(s_date_layer);
+    text_layer_destroy(s_dow_layer);
   
 }
 
