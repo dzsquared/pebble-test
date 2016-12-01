@@ -1,0 +1,44 @@
+{
+    "author": "drew.koballa@gmail.com",
+    "dependencies": {},
+    "keywords": [],
+    "name": "focusface",
+    "pebble": {
+        "displayName": "FocusFace",
+        "enableMultiJS": false,
+        "messageKeys": [],
+        "projectType": "native",
+        "resources": {
+            "media": [
+                {
+                    "file": "fonts/MODENINE_12.TTF",
+                    "name": "NINE_14",
+                    "type": "font"
+                },
+                {
+                    "characterRegex": "[0-9:. MONTUEWDHFRISA]",
+                    "file": "fonts/MODENINE.TTF",
+                    "name": "NINE_42",
+                    "type": "font"
+                },
+                {
+                    "file": "images/background.png",
+                    "menuIcon": true,
+                    "name": "IMAGE_BACKGROUND",
+                    "targetPlatforms": null,
+                    "type": "bitmap"
+                }
+            ]
+        },
+        "sdkVersion": "3",
+        "targetPlatforms": [
+            "aplite",
+            "basalt"
+        ],
+        "uuid": "3ecb02c5-270e-4b83-a73c-382eece0459f",
+        "watchapp": {
+            "watchface": true
+        }
+    },
+    "version": "1.0.0"
+}
